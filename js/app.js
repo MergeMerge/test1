@@ -54,7 +54,6 @@
 			$scope.updateId = -1;
 		};
 		// 5.切换任务绑定状态
-		// $scope.isCheckedAll = false;
 		$scope.$watch('isCheckedAll',function(newValue, oldValue){
 			if(newValue === oldValue)return ;
 			for(var i = 0; i < $scope.todoList.length; i++){
@@ -80,13 +79,21 @@
 			for(var i = 0; i< $scope.todoList.length; i++){
 				var todo = $scope.todoList[i];
 				if(todo.isCompleted){
-					console.log(111);
 					return true;
 				}
 			}
 			return false;
 		}
-		 
+		 // 6.2计数没有完成的任务项的个数
+		 $scope.getCount = function(){
+		 	var count = 0;
+		 	$scope.todoList.forEach(function(value,index){
+		 		if(!value.isCompleted){
+		 			count++;
+		 		};
+		 	});
+		 	return count;
+		 }
 
 	
 	}])
