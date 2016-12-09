@@ -13,7 +13,8 @@
 			{id:2,name:'学习',isCompleted:false},
 			{id:3,name:'打豆豆',isCompleted:false}
 		]
-		// 2.添加一条数据：利用form表单中点击enter键会触发ng-submit提交事件
+		// 2.添加数据
+		// 利用form表单中点击enter键会触发ng-submit提交事件
 		$scope.newTask = '';
 		var id;
 		$scope.add = function(){
@@ -28,7 +29,38 @@
 				$scope.todoList.push({id:id,name:$scope.newTask,isCompleted:false});
 				$scope.newTask = '';
 			}
-			
+		// 3.删除数据
+		$scope.remove = function(id){
+			console.log($scope.todoList);
+			console.log(id);
+			for(var i = 0;i < $scope.todoList.length; i++){
+				if(id === $scope.todoList[i].id){
+					$scope.todoList.splice(i,1);
+					break;
+				}
+			}
+		};
+		// 4.双击修改数据
+		 // var updateId = -1;
+		 $scope.updateId =-1;
+		$scope.update = function(id){
+			console.log(11111)
+			$scope.updateId = id;
+			console.log($scope.updateId)
+		};
+		$scope.save = function(id){
+			$scope.updateId = -1;
+		};
+		// 5.切换任务绑定状态
+		$scope.isCheckedAll = false;
+		$scope.$watch('isCheckedAll',function(newValue, oldValue){
+			if(newValue === oldValue){
+				return ;
+			};
+			for(var i = 0; i < $scope.todoList.length; i++){
+				$scope.todoList[i].isCompleted = newValue;
+			}
+		})
 	}
 	
 	}])
