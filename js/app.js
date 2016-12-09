@@ -18,17 +18,19 @@
 		$scope.newTask = '';
 		var id;
 		$scope.add = function(){
-			console.log($scope.todoList)
 			//当输入的添加任务内容不为空才提交
-			if($scope.newTask){
-				if($scope.todoList.length === 0){
-					id = 0;
-				}else{
-					id = $scope.todoList[$scope.todoList.length-1].id+1;
-				}
-				$scope.todoList.push({id:id,name:$scope.newTask,isCompleted:false});
-				$scope.newTask = '';
+			if(!$scope.newTask){
+				return false;
+			};
+			if($scope.todoList.length === 0){
+				id = 0;
+			}else{
+				id = $scope.todoList[$scope.todoList.length-1].id+1;
 			}
+			$scope.todoList.push({id:id,name:$scope.newTask,isCompleted:false});
+			$scope.newTask = '';}
+			
+
 		// 3.删除数据
 		$scope.remove = function(id){
 			console.log($scope.todoList);
@@ -52,16 +54,40 @@
 			$scope.updateId = -1;
 		};
 		// 5.切换任务绑定状态
-		$scope.isCheckedAll = false;
+		// $scope.isCheckedAll = false;
 		$scope.$watch('isCheckedAll',function(newValue, oldValue){
-			if(newValue === oldValue){
-				return ;
-			};
+			if(newValue === oldValue)return ;
 			for(var i = 0; i < $scope.todoList.length; i++){
 				$scope.todoList[i].isCompleted = newValue;
 			}
-		})
-	}
+		});
+
+		// 6.清除完成的任务
+		$scope.clearCompleted = function(){
+			// 用一个数组存储未完成的任务
+			var temp = [];
+			for(var i = 0; i< $scope.todoList.length; i++){
+				var todo = $scope.todoList[i];
+				if(!todo.isCompleted){
+					temp.push(todo);
+				}
+			};
+			$scope.todoList.length = 0;//清空数组
+			[].push.apply($scope.todoList,temp);
+		};
+		// 6.1控制清除任务按钮的显示和隐藏
+		$scope.isShow = function(){
+			for(var i = 0; i< $scope.todoList.length; i++){
+				var todo = $scope.todoList[i];
+				if(todo.isCompleted){
+					console.log(111);
+					return true;
+				}
+			}
+			return false;
+		}
+		 
+
 	
 	}])
 

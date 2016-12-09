@@ -12,6 +12,7 @@
 <body ng-app = "todoApp" ng-controller = "TodoController">
     <section class="todoapp">
         <header class="header">
+        <p ng-model="name">{{name}}</p>
             <h1>todos</h1>
             <form ng-submit="add()">
                 <input class="new-todo" placeholder="What needs to be done?" autofocus ng-model="newTask">
@@ -61,7 +62,7 @@
                 </li>
             </ul>
             <!-- Hidden if no completed items are left ↓ -->
-            <button class="clear-completed">Clear completed</button>
+            <button class="clear-completed" ng-click="clearCompleted()" ng-show="isShow()">Clear completed</button>
         </footer>
     </section>
     <footer class="info">
