@@ -26,15 +26,15 @@
 				id = 0;
 			}else{
 				id = $scope.todoList[$scope.todoList.length-1].id+1;
+				
 			}
 			$scope.todoList.push({id:id,name:$scope.newTask,isCompleted:false});
-			$scope.newTask = '';}
-			
+			$scope.newTask = '';
+
+		}
 
 		// 3.删除数据
 		$scope.remove = function(id){
-			console.log($scope.todoList);
-			console.log(id);
 			for(var i = 0;i < $scope.todoList.length; i++){
 				if(id === $scope.todoList[i].id){
 					$scope.todoList.splice(i,1);
@@ -55,6 +55,7 @@
 		};
 		// 5.切换任务绑定状态
 		$scope.$watch('isCheckedAll',function(newValue, oldValue){
+			console.log(1111)
 			if(newValue === oldValue)return ;
 			for(var i = 0; i < $scope.todoList.length; i++){
 				$scope.todoList[i].isCompleted = newValue;
@@ -85,7 +86,7 @@
 			return false;
 		}
 		 // 6.2计数没有完成的任务项的个数
-		 $scope.getCount = function(){
+		$scope.getCount = function(){
 		 	var count = 0;
 		 	$scope.todoList.forEach(function(value,index){
 		 		if(!value.isCompleted){
@@ -93,9 +94,20 @@
 		 		};
 		 	});
 		 	return count;
-		 }
+		}
+		 
+		
+		$scope.status = {};
+		$scope.checkAll = function(){
+			$scope.status = {};
+		};
+		$scope.checkCompleted = function(){
+			$scope.status = {isCompleted: true};
+		};
 
-	
+		$scope.checkActive = function(){
+			$scope.status = {isCompleted: false};
+		};
 	}])
 
 })(angular);
