@@ -6,7 +6,7 @@
 	// 创建模板
 	var app = angular.module('todoApp',[]);
 	// 创建控制器
-	app.controller('TodoController',['$scope',function($scope){
+	app.controller('TodoController',['$scope','$location', function($scope,$location){
 		$scope.todoList = [
 			{id:0,name:'吃饭',isCompleted:false},
 			{id:1,name:'睡觉',isCompleted:true},
@@ -96,7 +96,7 @@
 		 	return count;
 		}
 		 
-		
+		// 7.任务完成与否分类
 		$scope.status = {};
 		$scope.checkAll = function(){
 			$scope.status = {};
@@ -108,6 +108,27 @@
 		$scope.checkActive = function(){
 			$scope.status = {isCompleted: false};
 		};
+
+		// 8.点击分类按钮实现锚点跳转
+		$scope.location = $location;//$watch只能监视$scope的属性
+		$scope.$watch("location.url()",function(newValue,oldValue){
+			console.log(newValue);
+			switch(newValue){
+				case "/":
+					$scope.status = {};
+					break;
+				case "/active":
+					$scope.status = {isCompleted: false};
+					break;
+				case "/completed":
+					$scope.status = {isCompleted: true};
+					break;
+				defalut 
+					$scope.status = {};
+					break;
+
+			}
+		})
 	}])
 
 })(angular);
